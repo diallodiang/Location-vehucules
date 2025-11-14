@@ -1,0 +1,176 @@
+openapi: 3.0.4
+info:
+  title: API de gestion des contrats de location
+  description: >
+    API métier permettant de gérer les **contrats de location de véhicules** :
+    création, consultation, mise à jour et suppression.
+  version: 1.0.0
+  contact:
+    name: Support API
+    email: support@locationauto.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://api.locationauto.com/v1
+    description: Serveur de production
+  - url: http://localhost:8080
+    description: Serveur local de développement
+
+tags:
+  - name: contrats
+    description: Endpoints relatifs aux contrats de location
+
+paths:
+  /contrats:
+    post:
+      tags:
+        - contrats
+      summary: Créer un contrat de location
+      description: Crée un **contrat** entre un client et un véhicule.
+      operationId: createContrat
+      requestBody:
+        required: true
+        description: Objet Contrat à créer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contrat'
+      responses:
+        '201':
+          description: Contrat créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contrat'
+        '400':
+          description: Données invalides
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - contrats
+      summary: Liste des contrats
+      description: Récupère la liste de tous les contrats existants.
+      operationId: listContrats
+      responses:
+        '200':
+          description: Liste des contrats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contrat'
+        '500':
+          description: Erreur interne du serveur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Client:
+      type: object
+      required:
+        - identifiant
+        - nom
+        - prenom
+      properties:
+        identifiant:
+          type: integer
+          format: int64
+          example: 1
+        nom:
+          type: string
+          example: Ndiaye
+        prenom:
+          type: string
+          example: Doucouré
+        adresse:
+          type: string
+          example: "123 Rue de la République, Dakar"
+        email:
+          type: string
+          format: email
+          example: doucoure.ndiaye@example.com
+        telephone:
+          type: string
+          example: "+221770000000"
+
+    Vehicule:
+      type: object
+      required:
+        - identifiantVehicule
+        - marque
+        - modele
+      properties:
+        identifiantVehicule:
+          type: integer
+          format: int64
+          example: 101
+        marque:
+          type: string
+          example: Toyota
+        modele:
+          type: string
+          example: Corolla
+        matricule:
+          type: string
+          example: "DK-1234-AA"
+        kilometrage:
+          type: integer
+          example: 45000
+
+    Contrat:
+      type: object
+      required:
+        - identifiantContrat
+        - vehicule
+        - client
+        - prix
+        - duree
+        - dateDebut
+        - dateFinEstimee
+      properties:
+        identifiantContrat:
+          type: integer
+          format: int64
+          example: 5001
+        vehicule:
+          $ref: '#/components/schemas/Vehicule'
+        client:
+          $ref: '#/components/schemas/Client'
+        prix:
+          type: number
+          format: float
+          example: 150000
+        duree:
+          type: integer
+          description: Durée du contrat en jours
+          example: 7
+        dateDebut:
+          type: string
+          format: date
+          example: "2025-10-25"
+        dateFinEstimee:
+          type: string
+          format: date
+          example: "2025-11-01"
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "ERR_CONTRAT_001"
+        message:
+          type: string
+          example: "Les données du contrat sont invalides."

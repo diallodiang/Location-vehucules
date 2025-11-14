@@ -1,0 +1,189 @@
+openapi: 3.0.3
+info:
+  title: API de Gestion des Produits
+  description: >
+    Cette API permet de gérer des produits — création, consultation, mise à jour et suppression.
+  version: 1.0.0
+  contact:
+    name: Service API Support
+    email: support@autorducode.com
+
+servers:
+  - url: http://localhost:8080/api
+    description: Serveur local de développement
+
+tags:
+  - name: Produit
+    description: Opérations liées aux produits
+
+paths:
+  /produits:
+    get:
+      summary: Liste tous les produits
+      description: Récupère la liste complète des produits disponibles.
+      tags:
+        - Produit
+      operationId: getProduits
+      responses:
+        '200':
+          description: Liste des produits retournée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produit'
+
+    post:
+      summary: Crée un nouveau produit
+      description: Enregistre un nouveau produit dans la base de données.
+      tags:
+        - Produit
+      operationId: createProduit
+      requestBody:
+        description: Données du produit à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProduitCreateRequest'
+      responses:
+        '201':
+          description: Produit créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produit'
+        '400':
+          description: Données invalides
+
+  /produits/{id}:
+    get:
+      summary: Récupère un produit par son ID
+      description: Retourne les détails d’un produit spécifique.
+      tags:
+        - Produit
+      operationId: getProduitById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant du produit à récupérer
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Produit trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produit'
+        '404':
+          description: Produit non trouvé
+
+    put:
+      summary: Met à jour un produit existant
+      description: >
+        Met à jour les informations d’un produit existant selon son identifiant.
+      tags:
+        - Produit
+      operationId: updateProduit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant du produit à mettre à jour
+          schema:
+            type: integer
+      requestBody:
+        description: Données mises à jour du produit
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProduitUpdateRequest'
+      responses:
+        '200':
+          description: Produit mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produit'
+        '400':
+          description: Données invalides
+        '404':
+          description: Produit non trouvé
+
+    delete:
+      summary: Supprime un produit
+      description: Supprime définitivement un produit en fonction de son identifiant.
+      tags:
+        - Produit
+      operationId: deleteProduit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant du produit à supprimer
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Produit supprimé avec succès
+        '404':
+          description: Produit non trouvé
+
+components:
+  schemas:
+    Produit:
+      type: object
+      description: Objet représentant un produit
+      properties:
+        id:
+          type: integer
+          example: 1
+        nom:
+          type: string
+          example: Ordinateur portable HP
+        description:
+          type: string
+          example: Un ordinateur portable performant pour le travail et les études.
+        prix:
+          type: number
+          format: double
+          example: 750.99
+        quantite:
+          type: integer
+          example: 10
+      required:
+        - nom
+        - prix
+
+    ProduitCreateRequest:
+      type: object
+      properties:
+        nom:
+          type: string
+        description:
+          type: string
+        prix:
+          type: number
+          format: double
+        quantite:
+          type: integer
+      required:
+        - nom
+        - prix
+
+    ProduitUpdateRequest:
+      type: object
+      properties:
+        nom:
+          type: string
+        description:
+          type: string
+        prix:
+          type: number
+          format: double
+        quantite:
+          type: integer
