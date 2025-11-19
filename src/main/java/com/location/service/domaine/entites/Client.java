@@ -1,16 +1,16 @@
 package com.location.service.domaine.entites;
 
+import org.springframework.http.ResponseEntity;
+import com.location.service.api.ContratsApiController;
+import com.location.service.model.Contrat;
+import jakarta.validation.Valid;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
 import java.util.List;
 
 @Entity
-@Table(name = "clients")
 public class Client {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,6 @@ public class Client {
     private String email;
     private String telephone;
 
-    @OneToMany(mappedBy = "client")
     private List<Contrat> contrats;
 
     public Long getId() {
