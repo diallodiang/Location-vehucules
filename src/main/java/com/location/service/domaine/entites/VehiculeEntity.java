@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vehicules")
-public class Vehicule {
+public class VehiculeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,7 @@ public class Vehicule {
     private String matricule;
     private Integer kilometrage;
 
-    public Vehicule() {}
+    public VehiculeEntity() {}
 
     public Long getIdentifiantVehicule() {
         return identifiantVehicule;

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "clients")
-public class Client {
+public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class Client {
     private String email;
     private String telephone;
 
-    public Client() {}
+    public ClientEntity() {}
 
     public Long getIdentifiant() {
         return identifiant;

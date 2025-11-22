@@ -10,18 +10,18 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "contrats")
-public class Contrat {
+public class ContratEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "vehicule_id")
-    private Vehicule vehicule;
+    private VehiculeEntity vehicule;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private ClientEntity client;
 
     private double prix;
     private int duree;
@@ -31,16 +31,16 @@ public class Contrat {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Vehicule getVehicule() {
+	public VehiculeEntity getVehicule() {
 		return vehicule;
 	}
-	public void setVehicule(Vehicule vehicule) {
+	public void setVehicule(VehiculeEntity vehicule) {
 		this.vehicule = vehicule;
 	}
-	public Client getClient() {
+	public ClientEntity getClient() {
 		return client;
 	}
-	public void setClient(Client client) {
+	public void setClient(ClientEntity client) {
 		this.client = client;
 	}
 	public double getPrix() {

@@ -103,6 +103,20 @@
 			<artifactId>camunda-engine-rest-client-openapi-springboot</artifactId>
 			<version>7.18.0</version>
 		</dependency>
+		
+		 <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>1.5.5.Final</version>
+    </dependency>
+
+    <!-- Processeur d'annotations de MapStruct -->
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>1.5.5.Final</version>
+        <scope>provided</scope>
+    </dependency> 
 	</dependencies>
 
 	<build>
@@ -112,6 +126,22 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
+			   <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>17</source>
+                <target>17</target>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>1.5.5.Final</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+        </plugin>
+
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
@@ -130,6 +160,7 @@
 							<modelPackage>com.location.service.model</modelPackage>
 							<invokerPackage>com.location.service</invokerPackage>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+							<modelNameSuffix>DTO</modelNameSuffix>
 							<configOptions>
 								<openApiNullable>false</openApiNullable> <!--should add jackson nullable dependency if true-->
 								<useSpringBoot3>true</useSpringBoot3>
