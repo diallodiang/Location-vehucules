@@ -1,6 +1,7 @@
 package com.location.service.domaine.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,18 @@ public class ContratServiceImpl implements ContratService {
 		contratRepository.save(contratEntity);
 	
 		// TODO Auto-generated method stub
-		return contratMappers;
+		return contratMappers.entityVersDTO(contratEntity);
 	}
 
 	@Override
 	public List<ContratDTO> listContrats() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		
+		 return contratRepository.findAll()
+	                .stream()
+	                .map(contratMappers::entityVersDTO) // Entity → DTO
+	                .collect(Collectors.toList());
 	}
 
 }

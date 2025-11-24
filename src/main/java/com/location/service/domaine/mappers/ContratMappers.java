@@ -26,7 +26,6 @@ public interface ContratMappers {
   
   VehiculeEntity dtoversEntity (VehiculeDTO dto);
   
-  VehiculeDTO entityversDTO (VehiculeEntity entity);
-  
+  VehiculeDTO entityversDTO (VehiculeEntity entity); 
   
 }
