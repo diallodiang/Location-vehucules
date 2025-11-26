@@ -23,11 +23,11 @@ public class ContratServiceImpl implements ContratService {
 	
 	@Override
 	public ContratDTO createContrat(ContratDTO c) {
-		ContratEntity contratEntity = contratMappers.dtoVersEntity(c);
+		ContratEntity contratEntity = contratMappers.contratDtoToEntity(c);
 		contratRepository.save(contratEntity);
 	
 		// TODO Auto-generated method stub
-		return contratMappers.entityVersDTO(contratEntity);
+		return contratMappers.contratEntityToDto(contratEntity);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ContratServiceImpl implements ContratService {
 		
 		 return contratRepository.findAll()
 	                .stream()
-	                .map(contratMappers::entityVersDTO) // Entity → DTO
+	                .map(contratMappers::contratEntityToDto) // Entity → DTO
 	                .collect(Collectors.toList());
 	}
 
