@@ -13,19 +13,24 @@ import com.location.service.model.VehiculeDTO;
 
 @Mapper(componentModel ="spring")
 public interface ContratMappers {
-	@Mapping(target = "id",source = "identifiantContrat")
-  ContratEntity dtoVersEntity (ContratDTO dto);
 	
-	
-	@InheritInverseConfiguration
-  ContratDTO entityVersDTO (ContratEntity entity);
-  
-  ClientEntity dtoversEntity (ClientDTO dto);
-  
-  ClientDTO entityversDTO (ClientEntity entity); 
-  
-  VehiculeEntity dtoversEntity (VehiculeDTO dto);
-  
-  VehiculeDTO entityversDTO (VehiculeEntity entity); 
-  
+	// ---------------- CONTRAT ----------------
+    @Mapping(target = "id", source = "identifiantContrat")
+    ContratEntity contratDtoToEntity(ContratDTO dto);
+
+    @InheritInverseConfiguration
+    ContratDTO contratEntityToDto(ContratEntity entity);
+
+
+    // ---------------- CLIENT ----------------
+    ClientEntity clientDtoToEntity(ClientDTO dto);
+
+    ClientDTO clientEntityToDto(ClientEntity entity);
+
+
+    // ---------------- VEHICULE ----------------
+    VehiculeEntity vehiculeDtoToEntity(VehiculeDTO dto);
+
+    VehiculeDTO vehiculeEntityToDto(VehiculeEntity entity);
 }
+
