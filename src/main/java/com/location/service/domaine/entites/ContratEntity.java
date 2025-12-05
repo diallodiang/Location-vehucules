@@ -1,5 +1,6 @@
 package com.location.service.domaine.entites;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class ContratEntity {
     @JoinColumn(name = "client_id")
     private ClientEntity client;
 
-    private double prix;
+    private float prix;
     private int duree;
 	public Long getId() {
 		return id;
@@ -43,10 +44,10 @@ public class ContratEntity {
 	public void setClient(ClientEntity client) {
 		this.client = client;
 	}
-	public double getPrix() {
+	public float getPrix() {
 		return prix;
 	}
-	public void setPrix(double prix) {
+	public void setPrix(float prix) {
 		this.prix = prix;
 	}
 	public int getDuree() {
@@ -54,6 +55,7 @@ public class ContratEntity {
 	}
 	public void setDuree(int duree) {
 		this.duree = duree;
-	} 
+	}
+	
     
 }
