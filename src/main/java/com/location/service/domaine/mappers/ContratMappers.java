@@ -1,5 +1,7 @@
 package com.location.service.domaine.mappers;
 
+import java.util.Optional;
+
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -62,8 +64,6 @@ public class ContratMappers {
 	        return dto;
 	    }
 
-
-
     // ClientEntity clientDtoToEntity(ClientDTO dto);
 	 public ClientEntity clientDtoToEntity(ClientDTO dto) {
 	        if (dto == null) return null;
@@ -122,6 +122,8 @@ public class ContratMappers {
 
 	        return dto;
 	    }
+
+	 	 
 	 
 	 
 
