@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface CamundaService {
 
-    static void demarrerProcessus(String processDefinitionKey, String businessKey) {
+    /*static void demarrerProcessus(String processDefinitionKey, String businessKey) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -16,5 +16,11 @@ public interface CamundaService {
 
     List<org.camunda.bpm.engine.task.Task> listeTaches(String userId);
 
-    void envoyerMessage(String messageName, String businessKey, Map<String, Object> variables);
+    void envoyerMessage(String messageName, String businessKey, Map<String, Object> variables);*/
+	
+	String startProcess(Long clientId, Long vehiculeId);
+    void assignTask(String taskId, String userId);
+    void completeTask(String taskId, Map<String, Object> variables);
+    List<TaskDto> listTasks(String userId);
+    void sendMessage(String messageName, Map<String, Object> variables, String processInstanceId);
 }
