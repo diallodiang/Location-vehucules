@@ -11,9 +11,6 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
 	
     List<ClientEntity> findByNom(String nom);
     
-    Optional<ClientEntity> findByIdentifiant(int identifiant);
-    
     ClientEntity findByIdentifiant(Long identifiant);
 
-    
 }

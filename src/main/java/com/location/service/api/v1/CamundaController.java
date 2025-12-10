@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.location.service.domaine.services.CamundaService;
 import com.location.service.domaine.services.TaskDto;
 
-@RestController
-@RequestMapping("/api/camunda")
 public class CamundaController {
 
-    private final CamundaService camundaService;
+    /* private final CamundaService camundaService;
 
     public CamundaController(CamundaService camundaService) {
         this.camundaService = camundaService;
@@ -62,5 +60,5 @@ public class CamundaController {
                                               @RequestBody Map<String, Object> variables) {
         camundaService.sendMessage(messageName, variables, processInstanceId);
         return ResponseEntity.ok("Message '" + messageName + "' envoyé au process " + processInstanceId);
-    }
+    } */
 }
