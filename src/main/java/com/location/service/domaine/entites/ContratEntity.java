@@ -9,6 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "contrats")
 public class ContratEntity {
@@ -26,6 +28,11 @@ public class ContratEntity {
 
     private float prix;
     private int duree;
+
+    // Nouveaux champs pour les dates
+    private LocalDate dateDebut;
+    private LocalDate dateFinEstimee;
+
 	public Long getId() {
 		return id;
 	}
@@ -56,6 +63,20 @@ public class ContratEntity {
 	public void setDuree(int duree) {
 		this.duree = duree;
 	}
-	
-    
+
+    public LocalDate getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(LocalDate dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public LocalDate getDateFinEstimee() {
+        return dateFinEstimee;
+    }
+
+    public void setDateFinEstimee(LocalDate dateFinEstimee) {
+        this.dateFinEstimee = dateFinEstimee;
+    }
 }

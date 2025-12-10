@@ -33,11 +33,11 @@ public class VehiculeEntity {
         this.marque = marque;
     }
 
-    public String getModel() {
+    public String getModele() {
         return modele;
     }
 
-    public void setModel(String modele) {
+    public void setModele(String modele) {
         this.modele = modele;
     }
 

@@ -1,14 +1,30 @@
 package com.location.service.domaine.services;
 
+import com.location.service.model.ContratDTO;
+
 import java.util.List;
 import java.util.Map;
 
 public interface CamundaService {
 
-    /*static void demarrerProcessus(String processDefinitionKey, String businessKey) {
-		// TODO Auto-generated method stub
-		
-	}
+    // Démarrer le processus pour un contrat
+    String startProcess(ContratDTO contratDTO);
+
+    // Lister les tâches assignées à un utilisateur
+    List<Map<String, Object>> listTasks(String userId);
+
+    // Assigner une tâche à un utilisateur
+    void assignTask(String taskId, String userId);
+
+    // Compléter une tâche
+    void completeTask(String taskId, Map<String, Object> variables);
+
+    // Envoyer un message à un processus
+    void sendMessage(String messageName, String businessKey, Map<String, Object> variables);
+
+
+
+    /* static void demarrerProcessus(String processDefinitionKey, String businessKey);
 
     Void assignerTache(String idTache, String userId);
 
@@ -16,11 +32,5 @@ public interface CamundaService {
 
     List<org.camunda.bpm.engine.task.Task> listeTaches(String userId);
 
-    void envoyerMessage(String messageName, String businessKey, Map<String, Object> variables);*/
-	
-	String startProcess(Long clientId, Long vehiculeId);
-    void assignTask(String taskId, String userId);
-    void completeTask(String taskId, Map<String, Object> variables);
-    List<TaskDto> listTasks(String userId);
-    void sendMessage(String messageName, Map<String, Object> variables, String processInstanceId);
+    void envoyerMessage(String messageName, String businessKey, Map<String, Object> variables); */
 }
