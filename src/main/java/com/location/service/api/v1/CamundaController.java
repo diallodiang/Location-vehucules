@@ -3,6 +3,7 @@ package com.location.service.api.v1;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,51 +17,65 @@ import com.location.service.domaine.services.CamundaService;
 import com.location.service.domaine.services.TaskDto;
 
 @RestController
-@RequestMapping("/api/camunda")
+@RequestMapping("/camunda")
 public class CamundaController {
 
-    private final CamundaService camundaService;
+    @Autowired
+    private CamundaService camundaService;
 
-    public CamundaController(CamundaService camundaService) {
-        this.camundaService = camundaService;
+    /**
+     * Lister les tâches assignées à un utilisateur
+     */
+    @GetMapping("/tasks")
+    public ResponseEntity<List<Map<String, Object>>> listTasks(@RequestParam String userId) {
+        List<Map<String, Object>> tasks = camundaService.listTasks(userId);
+        return ResponseEntity.ok(tasks);
     }
 
-    // Démarrer le process
-    @PostMapping("/start")
-    public ResponseEntity<String> startProcess(@RequestParam Long clientId,
-                                               @RequestParam Long vehiculeId) {
-        String processId = camundaService.startProcess(clientId, vehiculeId);
-        return ResponseEntity.ok("Processus démarré avec ID: " + processId);
+    @GetMapping("/all-tasks")
+    public ResponseEntity<List<Map<String, Object>>> listTasks() {
+        List<Map<String, Object>> tasks = camundaService.listTasks();
+        return ResponseEntity.ok(tasks);
     }
 
-    // Assigner la tâche
-    @PostMapping("/task/assign")
-    public ResponseEntity<String> assignTask(@RequestParam String taskId,
-                                             @RequestParam String userId) {
+    /**
+     * Assigner une tâche à un utilisateur
+     */
+    @PostMapping("/task/{taskId}/assignee")
+    public ResponseEntity<Void> assingTask(@PathVariable String taskId, @RequestParam String userId) {
         camundaService.assignTask(taskId, userId);
-        return ResponseEntity.ok("Tâche " + taskId + " assignée à " + userId);
+        return ResponseEntity.ok().build();
     }
 
-    // Compléter la tâche
-    @PostMapping("/task/complete")
-    public ResponseEntity<String> completeTask(@RequestParam String taskId,
-                                               @RequestBody Map<String, Object> variables) {
+    /**
+     * Compléter une tâche avec des variables optionnelles
+     */
+    @PostMapping("/task/{taskId}/complete")
+    public ResponseEntity<Void> completeTask(@PathVariable String taskId, @RequestBody(required = false) Map<String, Object> variables) {
         camundaService.completeTask(taskId, variables);
-        return ResponseEntity.ok("Tâche " + taskId + " complétée");
+
+        return ResponseEntity.ok().build();
     }
 
-    // Lister les tâches d'un utilisateur
-    @GetMapping("/tasks/{userId}")
-    public List<TaskDto> listTasks(@PathVariable String userId) {
-        return camundaService.listTasks(userId);
-    }
-
-    // Envoyer un message
+    /**
+     * Envoyer un message à un processus Camunda
+     */
     @PostMapping("/message")
-    public ResponseEntity<String> sendMessage(@RequestParam String messageName,
-                                              @RequestParam String processInstanceId,
-                                              @RequestBody Map<String, Object> variables) {
-        camundaService.sendMessage(messageName, variables, processInstanceId);
-        return ResponseEntity.ok("Message '" + messageName + "' envoyé au process " + processInstanceId);
+    public ResponseEntity<Void> sendMessage(@RequestParam String messageName, @RequestParam String businessKey, @RequestBody(required = false) Map<String, Object> variables
+    ) {
+        camundaService.sendMessage(messageName, businessKey, variables);
+        return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/process-instance")
+    public ResponseEntity<Map<String, Object>> getProcessInstance(@RequestParam String businessKey) {
+        Map<String, Object> instance = camundaService.getProcessInstanceByBusinessKey(businessKey);
+
+        if (instance != null) {
+            return ResponseEntity.ok(instance);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -11,8 +11,6 @@ public interface VehiculeRepository extends JpaRepository<VehiculeEntity, Long> 
 	
     List<VehiculeEntity> findByMarque(String marque);
     
-    Optional<VehiculeEntity> findByIdentifiantVehicule(int identifiantVehicule);
-    
     VehiculeEntity findOneByIdentifiantVehicule(Long vehiculeId);
 
 }
